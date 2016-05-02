@@ -15,11 +15,11 @@ namespace Core1.Controllers.API
         public IActionResult Json()
         {
             TripsRepository db = new TripsRepository();
-            //JsonResult.Trip = new Trip()
-           // {
-            //    Name = "First Trip",
-            //    DateCreated = DateTime.Now
-          //  };
+            JsonResult.Trip = new Trip()
+           {
+                Name = "First Trip",
+               DateCreated = DateTime.Now
+           };
             var trips = db.GetAllTrips();
             var results = Mapper.Map<IEnumerable<TripViewModel>>(trips);
             return Json(); // past trips to the JsonResult
