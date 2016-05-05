@@ -20,7 +20,8 @@ namespace Core1.Controllers.Web
             ViewBag.Trip = new Trip()
             {
                 Name = "Sample Trip",
-                DateCreated = DateTime.Now
+                DateCreated = DateTime.Now,
+                UserName = "Enter your name: "
             };
             var trips = db.GetAllTrips();
             return View(trips); // past trips to the view
