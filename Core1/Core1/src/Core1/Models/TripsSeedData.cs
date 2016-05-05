@@ -1,4 +1,5 @@
 ﻿using Core1.Models;
+using Microsoft.Data.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -94,6 +95,8 @@ namespace MVC6.Models
                 db.Trips.Add(bigTrip);
                 db.Stops.AddRange(bigTrip.Stops);
                 db.SaveChanges();
+
+
             }
         }
     }

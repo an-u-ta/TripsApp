@@ -13,7 +13,7 @@ namespace Core1.Controllers.Web
     public class HomeController : Controller
     {
         // GET: /<controller>/
-        [Authorize]
+       // [Authorize]
         public IActionResult Index()
         {
             TripsRepository db = new TripsRepository();
@@ -23,7 +23,7 @@ namespace Core1.Controllers.Web
                 DateCreated = DateTime.Now
             };
             var trips = db.GetAllTrips();
-            return View(); // past trips to the view
+            return View(trips); // past trips to the view
         }
         public IActionResult About()
         {

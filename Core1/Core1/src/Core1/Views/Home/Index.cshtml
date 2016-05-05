@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<Core1.Models.Trip>
             <p>Getting started..</p>
 
             <form>
@@ -12,5 +12,26 @@
                 </div>
                 <div><input type="submit" value="Add" /></div>
             </form>
-<p>Trip Name: @ViewBag.Trip.Name</p>
-<p> Date Created: @ViewBag.Trip.DateCreated</p>
+<br />
+<h2>Trips:</h2>
+<div ng-app="trips">
+    <div ng-view></div>
+    <p>Trip Name: @ViewBag.Trip.Name</p>
+    <p> Date Created: @ViewBag.Trip.DateCreated</p>
+    @{
+        foreach (var trip in Model)
+        {
+            <div>
+                @trip.Name
+               <ul>
+                    @foreach (var stop in trip.Stops)
+                   {
+                        <li>@stop.Name</li>
+                    }
+               </ul>
+            </div>
+
+        }
+    }
+</div>
+

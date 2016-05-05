@@ -1,0 +1,11 @@
+﻿services.AddIdentity<AppUser, IdentityRole>
+    (config =>
+    {
+    config.User.RequireUniqueEmail = true;
+    config.Password.RequiredLength = 8;
+    config.Password.RequireUppercase = false;
+    config.Password.RequireNonLetterOrDigit = false;
+    config.Cookies.ApplicationCookie.LoginPath = "/Auth/Login";
+    }).AddEntityFrameworkStores<TripContext>
+        ();
+        }

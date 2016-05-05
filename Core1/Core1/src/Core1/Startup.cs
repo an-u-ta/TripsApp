@@ -11,6 +11,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.Data.Entity;
 using MVC6.Models;
+using AutoMapper;
+using Core1.ViewModels;
+using Core1.Services;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Core1
 {
@@ -31,38 +35,53 @@ namespace Core1
         {
             services.AddMvc();
             services.AddScoped<TripsRepository>();
-            services.AddEntityFramework().AddSqlServer().AddDbContext<TripContext>();
             services.AddTransient<TripsSeedData>();
+            services.AddScoped<CoordinateService>();
+            services.AddIdentity<AppUser, IdentityRole>(config =>
+            {
+                config.User.RequireUniqueEmail = true;
+                config.Password.RequiredLength = 8;
+                config.Password.RequireUppercase = false;
+                config.Password.RequireNonLetterOrDigit = false;
+                config.Cookies.ApplicationCookie.LoginPath = "/Auth/Login";
+            }).AddEntityFrameworkStores<TripContext>();
+
             services.AddEntityFramework().AddSqlServer().AddDbContext<TripContext>(
-                options =>
-            options.UseSqlServer(Configuration["Data:DefaultConnection:TripsConnectionString"])
-            );
+                    options =>
+                options.UseSqlServer(Configuration["Data:DefaultConnection:TripsConnectionString"]));
         }
+           // services.AddEntityFramework().AddSqlServer().AddDbContext<TripContext>(
+           //    options =>
+           //options.UseSqlServer(Configuration["Data:BingKey:https"])
+           //);
+            
+    
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, TripsSeedData seed)
         {
             app.UseIISPlatformHandler();
-            app.UseDefaultFiles();
+            //app.UseDefaultFiles();
             app.UseStaticFiles();
             seed.InsertSeedData();
+            Mapper.Initialize(config =>
+            {
+                config.CreateMap<Trip, TripViewModel>().ReverseMap();
+            }
+            );
+
             app.UseMvc(config =>
                 {
                     config.MapRoute(
                         name: "Default",
                         template: "{controller}/{action}/{id?}",
                         defaults: new { controller = "Home", action = "Index" }
-                     );
-                    Mapper.Initialize(config =>
-                    {
-                        config.CreateMap<Trip, TripViewModel>().ReverseMap();
-                    }
-);
+                 );
                 });
-         //  app.Run(async (context) =>
-           // {
-           // await context.Response.WriteAsync("Hello the Brave New World!");
-           //   });
+          app.Run(async (context) =>
+            {
+            await context.Response.WriteAsync("Hello the Brave New World!");
+             });
         }
 
         // Entry point for the application.

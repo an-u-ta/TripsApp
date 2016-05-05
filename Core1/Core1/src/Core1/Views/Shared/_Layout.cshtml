@@ -7,7 +7,9 @@
     <link href="~/css/site.css" rel="stylesheet" />
 </head>
 <body>
-   
+    <div class="navbar-collapse collapse">
+        @await Html.PartialAsync("_LoginPartial")
+    </div>
     <div id="sidebar">
         <img src="~/img/user1.png" alt="headshot" class="headshot" />
         <span>Bill G.</span>
