@@ -44,6 +44,7 @@ namespace Core1
                 config.Password.RequireUppercase = false;
                 config.Password.RequireNonLetterOrDigit = false;
                 config.Cookies.ApplicationCookie.LoginPath = "/Auth/Login";
+
             }).AddEntityFrameworkStores<TripContext>();
 
             services.AddEntityFramework().AddSqlServer().AddDbContext<TripContext>(
@@ -67,9 +68,10 @@ namespace Core1
             Mapper.Initialize(config =>
             {
                 config.CreateMap<Trip, TripViewModel>().ReverseMap();
+                config.CreateMap<Stop, StopViewModel>().ReverseMap();
             }
             );
-
+           
             app.UseMvc(config =>
                 {
                     config.MapRoute(

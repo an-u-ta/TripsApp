@@ -33,7 +33,7 @@ namespace Core1.Controllers.API
 
         // POST api/values
         [HttpPost]
-        public JsonResult Post(TripViewModel trip)
+        public JsonResult Post([FromBody]TripViewModel trip)
         {
             var newTrip = Mapper.Map<Trip>(trip);
             newTrip.UserName = "Nicolas Cage";

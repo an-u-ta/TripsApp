@@ -27,8 +27,8 @@ namespace Core1.Models
 
         public IEnumerable<Stop> GetStops(string name)
         {
-
-            return db.Stops
+            var trip = db.Trips.Include(t => t.Stops).Where(t => t.Name == name).Single();
+            return trip.Stops
                 //.Include(s => s.stop.ID)
                 .OrderBy(t => t.Order).Where(t => t.Name == name).ToList();
                 
